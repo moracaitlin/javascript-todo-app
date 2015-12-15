@@ -26,8 +26,17 @@ function renderTodos() {
   for (var i = 0; i < todos.length; i++) {
     var todo = todos[i];
     var checked = todo.complete ? 'checked' : ''
-    $('.todos').append("<li class='todo' data-id=" + todo.id + "><label><input class='toggle-todo' type='checkbox' " + checked + "/> " + todo.text + "</label></li>");
+    $('.todos').append("<li class='todo " + checked + "' data-id=" + todo.id + "><label><input class='toggle-todo' type='checkbox' " + checked + "/> " + todo.text + "</label></li>");
   }
+
+  var total = todos.length;
+  $('.total').text( total);
+
+  var complete = $('li.checked').length;
+  $('.complete').text( complete);
+
+  var incomplete = total - complete;
+  $('.incomplete').text( incomplete);
 }
 
 function findById(id) {
@@ -38,9 +47,12 @@ function findById(id) {
       todo = todos[i];
     }
   }
-
   return todo;
 }
+
+// function findTotal() {
+
+// }
 
 $(document).ready(function() {
   // Initialize with any existing todos.
@@ -50,6 +62,7 @@ $(document).ready(function() {
   $(document).on('change', '.toggle-todo', function(event) {
     var id = $(event.target).parent().parent().data('id');
     var todo = findById(id);
+    // $('.stats').append(total);
 
     todo.complete = event.target.checked;
 
@@ -62,6 +75,11 @@ $(document).ready(function() {
 
     var text = $('.todo-text').val();
 
+    if (text.length === 0) {
+      $('.alert').text('Todo cannot be empty.')
+      return;
+    }
+
     var newTodo = {
       id: incrementId(),
       text: text,
@@ -71,6 +89,10 @@ $(document).ready(function() {
     todos.push(newTodo);
 
     renderTodos();
+
+    $('.todo-text').val('');
+    $('.alert').text('');
+
   });
 
 });

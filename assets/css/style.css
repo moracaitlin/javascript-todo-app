@@ -1,4 +1,7 @@
 body {
   background: #C9C4C4; }
 
+.checked {
+	text-decoration: line-through;
+}
 /*# sourceMappingURL=style.css.map */
