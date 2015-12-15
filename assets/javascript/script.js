@@ -29,6 +29,7 @@ function renderTodos() {
     $('.todos').append("<li class='todo " + checked + "' data-id=" + todo.id + "><label><input class='toggle-todo' type='checkbox' " + checked + "/> " + todo.text + "</label><button>delete</button></li>");
   }
 
+//Have Stats
   var total = todos.length;
   $('.total').text( total);
 
@@ -95,21 +96,32 @@ $(document).ready(function() {
 
   });
 
-  //Have delete button delete single todo.
-  $(document).on('click', 'li button', function(event) {
-    var id = $(event.target).parent().data('id');
-    var todo = findById(id);
-    var indexOfTodo = todos.indexOf(todo);
-    console.log(indexOfTodo);
+    //Have delete button delete single todo.
+    $(document).on('click', 'li button', function(event) {
+      var id = $(event.target).parent().data('id');
+      var todo = findById(id);
+      var indexOfTodo = todos.indexOf(todo);
+      console.log(indexOfTodo);
 
-    if (indexOfTodo > -1) {
-      todos.splice(indexOfTodo, 1);
-    }
+      if (indexOfTodo > -1) {
+        todos.splice(indexOfTodo, 1);
+      }
 
-  $(document).on("click", "li button", function(e) {
-    e.preventDefault();
-    $(this).parent().remove();
+    $(document).on("click", "li button", function(e) {
+      e.preventDefault();
+      $(this).parent().remove();
+    });
+
   });
+
+    $(document).on('click', '.deleteComplete', function(event) {
+      event.preventDefault();
+      var complete = $('li.checked');
+      complete.remove();
+
+      
+
+      todos.splice(complete, 1);
 
   });
 
